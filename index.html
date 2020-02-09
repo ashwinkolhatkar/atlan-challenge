@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2>Data set</h2>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <form name="dataform" action="">
+    Upper Bound:<br>
+    <input type="text" name="drub" id="drub" class="text-input">
+    <br><br>
+    Lower Bound:<br>
+    <input type="text" name="drlb" id="drlb" class="text-input">
+    <br><br>
+    Update Value:<br>
+    <input type="text" name="update_val" id="update_val" class="text-input">
+    <br><br>
+    <i>[Schema of Table: customer_id, store_id, first_name, last_name, email, address_id, active, create_date,
+      last_update]</i>
+    <br><br>
+
+    <input id="submit_btn" type="submit" value="Submit" onsubmit="getDataRequest()">
+
+  </form>
+
+  <div id="data_form">
+  </div>
+
+  <br><br>
+  <button id="pause_btn" type="button" value="Pause Request" onclick="pauseRequest()">Pause Request</button>
+  <br><br>
+  <button id="resume_btn" type="button" value="Resume Request" disabled="true" onclick="resumeRequest()">Resume
+    Request</button>
+  <br><br>
+  <button id="cancel_btn" type="button" value="Cancel Request" disabled="true" onclick="cancelRequest()">Cancel
+    Request</button>
+  <br><br>
+
+  <div class="progress progress-striped active" id="progressouter">
+    <div class="bar" id="progress"></div>
+
+    Status:
+    <p id="status-text">Submit Data</p>
+    <br><br>
+
+    <script>
+
+
+      // Pausing data request
+      function pauseRequest() {
+        $('#pause_btn').prop('disabled', true);
+        $('#resume_btn').prop('disabled', false);
+        $('#cancel_btn').prop('disabled', false);
+
+        var dataString = "pauseRequest=true";
+        $.ajax({
+            type: "POST",
+            url: "/pauseRequest",
+            data: dataString,
+            success: function () {
+              console.log('Sucessfully sent pause request');
+              $('#status-text').prop('innerHTML', "Data Request Paused");
+            }
+        });
+      }
+
+
+      // Resume data request
+      function resumeRequest() {
+        $('#pause_btn').prop('disabled', false);
+        $('#resume_btn').prop('disabled', true);
+
+        var dataString = "resumeRequest=true";
+
+        $.ajax({
+            type: "POST",
+            url: "/resumeRequest",
+            data: dataString,
+            success: function () {
+              console.log('Sucessfully sent resume request');
+              $('#status-text').prop('innerHTML', "Resumed Data Request");
+            }
+        });
+      }
+
+      // Cancel data request
+      function cancelRequest() {
+        $('#pause_btn').prop('disabled', false);
+        $('#resume_btn').prop('disabled', false);
+        $('#cancel_btn').prop('disabled', false);
+
+        var dataString = "cancelRequest=true";
+
+        $.ajax({
+            type: "POST",
+            url: "/cancelRequest",
+            data: dataString,
+            success: function () {
+              console.log('Sucessfully sent cancel request');
+              $('#status-text').prop('innerHTML', "Data Request Cancelled");
+            }
+        });
+      }
+
+      // Getting data from database request
+      function getDataRequest() {
+        $('#pause_btn').prop('disabled', false);
+        $('#resume_btn').prop('disabled', true);
+        $('#submit_btn').prop('value', 'Getting data');
+      }
+
+
+
+      $(function () {
+
+        // form validation
+        $("#submit_btn").click(function () {
+          console.log('Submission done')
+          // validate and process form here
+          $('.error').hide();
+          var drlb = $("input#drlb").val();
+          if (drlb == "") {
+            //$("label#name_error").show();
+            $("input#drlb").focus();
+            return false;
+          }
+          var drub = $("input#drub").val();
+          if (drub == "") {
+            //$("label#email_error").show();
+            $("input#drub").focus();
+            return false;
+          }
+          var phone = $("input#update_val").val();
+          if (phone == "") {
+            //$("label#phone_error").show();
+            $("input#update_val").focus();
+            return false;
+          }
+
+
+          // Now that form validation is done, we can send the POST request.
+          var dataString = 'drlb=' + drlb + '&drub=' + drub + '&update_val=' + update_val;
+          //alert (dataString);return false;
+          $.ajax({
+            type: "POST",
+            url: "/getData",
+            data: dataString,
+            success: function () {
+              $('#data_form').html("<div id='message'></div>");
+              $('#message').html("<h2>Contact Form Submitted!</h2>")
+                .append("<p>We will be in touch soon.</p>")
+            }
+          });
+          return false;
+
+        });
+
+
+        // 
+
+      });
+
+    </script>
+
+
+</body>
+
+</html>
