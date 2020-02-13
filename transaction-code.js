@@ -1,4 +1,4 @@
-/* begin transaction */
+/* Begin transaction */
 connection.beginTransaction(function (err) {
     console.log('Transaction will begin...')
     if (err) {

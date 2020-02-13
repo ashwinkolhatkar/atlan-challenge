@@ -7,10 +7,10 @@
 
   <form name="dataform" action="">
     Upper Bound:<br>
-    <input type="text" name="drub" id="drub" class="text-input">
+    <input type="date" name="drub" id="drub" class="text-input">
     <br><br>
     Lower Bound:<br>
-    <input type="text" name="drlb" id="drlb" class="text-input">
+    <input type="date" name="drlb" id="drlb" class="text-input">
     <br><br>
     Update Value:<br>
     <input type="text" name="update_val" id="update_val" class="text-input">
@@ -113,6 +113,11 @@
 
       $(function () {
 
+        // resetting all the pause, cancel and resume buttons
+        $('#pause_btn').prop('disabled', false);
+        $('#resume_btn').prop('disabled', false);
+        $('#cancel_btn').prop('disabled', false);
+
         // form validation
         $("#submit_btn").click(function () {
           console.log('Submission done')
@@ -130,8 +135,8 @@
             $("input#drub").focus();
             return false;
           }
-          var phone = $("input#update_val").val();
-          if (phone == "") {
+          var update_val= $("input#update_val").val();
+          if (update_val == "") {
             //$("label#phone_error").show();
             $("input#update_val").focus();
             return false;
