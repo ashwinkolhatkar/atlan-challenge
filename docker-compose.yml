@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password@root123
+      MYSQL_DATABASE: sakila
+    ports: 
+      - "3360:3360"
+    expose: 
+      - 3360
+    volumes: 
+      - ./db:/docker-entrypoint-initdb.d
+
+  atlan-app:
+    build: .
+    ports: 
+      - 9000:3000
+    links: 
+      - db:db
+    depends_on: 
+      - db
+    

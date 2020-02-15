@@ -109,8 +109,6 @@
         $('#submit_btn').prop('value', 'Getting data');
       }
 
-
-
       $(function () {
 
         // resetting all the pause, cancel and resume buttons
@@ -142,7 +140,6 @@
             return false;
           }
 
-
           // Now that form validation is done, we can send the POST request.
           var dataString = 'drlb=' + drlb + '&drub=' + drub + '&update_val=' + update_val;
           //alert (dataString);return false;
@@ -152,22 +149,14 @@
             data: dataString,
             success: function () {
               $('#data_form').html("<div id='message'></div>");
-              $('#message').html("<h2>Contact Form Submitted!</h2>")
-                .append("<p>We will be in touch soon.</p>")
+              $('#message').html("<h2>Form Submitted!</h2>")
+                .append("<p>Transaction will start in db</p>")
             }
           });
           return false;
-
         });
-
-
-        // 
-
       });
-
     </script>
-
-
 </body>
 
 </html>
