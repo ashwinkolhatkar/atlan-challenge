@@ -1,7 +1,7 @@
 # atlan-challenge
 My solution for Atlan Backend Engineering Internship Task
 
-To build the API, run docker-compose up --build  inside atlan-challenge directory.
+To build the API, run ```docker-compose up --build```  inside atlan-challenge directory.
 
 The solution uses worker threads. Every time a submit request is made, a new worker thread is created to run the query. 
 Once the query completes or fails, the worker thread dies and query is cancelled.
