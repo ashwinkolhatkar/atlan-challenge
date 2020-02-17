@@ -10,11 +10,12 @@ const app = express();
 // Database connection
 function initialiseConnection(){
     return mysql.createConnection({
-        host: 'localhost',
+        host: 'db',
         user: 'root',
         password: 'password@root123',
         database: 'sakila',
         multipleStatements: true
+        
     });
 }
 
@@ -56,6 +57,7 @@ app.post('/getData', function (req, res) {
                 uVal : req.body.update_val
             }
         });
+
       } else {
         console.log('Inside Worker!');
         console.log(isMainThread); 

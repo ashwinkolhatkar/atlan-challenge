@@ -6,6 +6,7 @@ const mysql = require('mysql');
 worker.parentPort.on('message', function(message) {
     console.log(message);
     if(message=='pause'){
+        console.log('pausing connection');
         connection.pause();
     }
     if(message=='resume'){
@@ -16,15 +17,18 @@ worker.parentPort.on('message', function(message) {
         // KILL query logic over here.
        // connection.resume();
         connection.destroy();
-        console.log('destroyyyyed');
+        console.log('destroyed connection.');
         connection = initialiseConnection();
+        //worker.parentPort.postMessage('kill-thread');
+        console.log('killing thread ', worker.threadId);
+        process.exit(0);
     }
 });
 
 // Database connection
 function initialiseConnection(){
     return mysql.createConnection({
-        host: 'localhost',
+        host: 'db',
         user: 'root',
         password: 'password@root123',
         database: 'sakila',
