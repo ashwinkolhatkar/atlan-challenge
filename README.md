@@ -19,6 +19,10 @@ The query runs inside a transaction to keep the update atomic.
  So I have kept a ```SLEEP(1000)``` query before and after the ```UPDATE ..``` query in the transaction in the ```getDataForDateRange(..)``` function, to give time to test the pause, resume and cancel features. 
 - These features can be checked by observing that if pause/resume/cancel are pressed- even after more than 20 seconds (enough time for the entire transaction to have run), the logs would not show a successfully committed message. 
 - For resume, the transaction would continue, and the changes are successfully committed- unless it was a cancel operation, in which case it would have rolled back and not displayed successful commit message.
+
+
+## Checking the database for changes
+Use ```docker exec mysql-db-container -it mysql -u [username] -p``` and enter the password. Then run query ```SELECT * FROM sakila.customers``` in the sakila db to check the ```active``` field to check if the changes have been reflected in the database.
  
  This was a fun challenge!
  Hope to hear back from you soon!
