@@ -22,7 +22,8 @@ The query runs inside a transaction to keep the update atomic.
 
 
 ## Checking the database for changes
-Use ```docker exec mysql-db-container -it mysql -u [username] -p``` and enter the password. Then run query ```SELECT * FROM sakila.customers``` in the sakila db to check the ```active``` field to check if the changes have been reflected in the database.
+After creating the containers, use ```docker exec -it mysql-db-container mysql -u [username] -p``` and enter the password. Then run query ```SELECT * FROM sakila.customers``` in the sakila db to check the ```active``` field to check if the changes have been reflected in the database.
+ 
  
  This was a fun challenge!
  Hope to hear back from you soon!
